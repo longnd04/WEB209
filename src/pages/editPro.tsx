@@ -4,7 +4,6 @@ import { IProducts } from "../interface/products";
 import { useParams } from "react-router-dom";
 import { z } from "zod";
 
-// Define the schema using Zod
 const productSchema = z.object({
     title: z.string().nonempty("Title is required"),
     price: z.preprocess(
@@ -21,7 +20,6 @@ const EditPro = () => {
     const [description, setDescription] = useState<string>('');
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-    // Function to validate the form data and update errors
     const validate = () => {
         const result = productSchema.safeParse({ title, price, description });
 
@@ -38,7 +36,6 @@ const EditPro = () => {
         }
     };
 
-    // Use effect to fetch product data and populate form
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -48,13 +45,10 @@ const EditPro = () => {
                 setDescription(data.description);
             } catch (error) {
                 console.error("Error fetching product:", error);
-                // Handle error (e.g., redirect or show error message)
             }
         };
         fetchData();
     }, [id]);
-
-    // Use effect to validate whenever the state changes
     useEffect(() => {
         validate();
     }, [title, price, description]);

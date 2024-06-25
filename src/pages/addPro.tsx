@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { instance } from "../utils/product";
 import { IProducts } from "../interface/products";
 import { z } from "zod";
-
-// Define the schema using Zod
 const productSchema = z.object({
     title: z.string().nonempty("Title is required"),
     price: z.preprocess(
@@ -18,8 +16,6 @@ const AddPro = () => {
     const [price, setPrice] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
-    // Function to validate the form data and update errors
     const validate = () => {
         const result = productSchema.safeParse({ title, price, description });
 
@@ -35,8 +31,6 @@ const AddPro = () => {
             setErrors({});
         }
     };
-
-    // Use effect to validate whenever the state changes
     useEffect(() => {
         validate();
     }, [title, price, description]);
